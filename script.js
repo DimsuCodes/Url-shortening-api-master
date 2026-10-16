@@ -1,41 +1,64 @@
 const localStorageKey = "shortenedUrls";
 const longUrl = document.getElementById("long-url");
+const urlList = document.getElementById("urlList");
 
+const apiKey = '<your bitly api key here>';
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
+    // prevent the page from automatically refreshing
     event.preventDefault();
-    
-    // const url = longUrl.value; // don't worry about this now.
-    
 
-    const url={"https://www.youtube.com/watch?v=EjnuRcc_RBo&list=RDEjnuRcc_RBo&start_radio=1" : "https://bit.ly/4s4iMrz" };
+    // grab what's currently in local storage
+    let fromLocalStorage = localStorage.getItem(localStorageKey);
+    // if nothing in local storage, default it to an empty JSON object string
+    if (fromLocalStorage == null || fromLocalStorage == '') fromLocalStorage = '{}';
+    // parse data from local storage into JSON
+    const parsedUrlList = JSON.parse(fromLocalStorage);
 
-    localStorage.setItem(localStorageKey, JSON.stringify(url));
+    // Make an API call to bitly
+    const response = await fetch('https://api-ssl.bitly.com/v4/shorten', {
+        method: 'POST',
+        headers: {
+            "Authorization": `Bearer ${apiKey}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "long_url": longUrl.value
+        })
+    })
+
+    // get the link from the API response
+    const responseData = await response.json();
+    const shortenedUrl = responseData.link;
+
+    // add the newly submitted long URL and shortened URL to the object from local storage
+    parsedUrlList[longUrl.value] = shortenedUrl;
+
+    // save the newly updated JSON back into local storage
+    localStorage.setItem(localStorageKey, JSON.stringify(parsedUrlList));
+
+    // refresh the URL list in the page
+    refreshUrlList();
 }
 
-/*
-okay now we have three parts left.
+function refreshUrlList() {
+    // grab what's currently in local storage
+    let fromLocalStorage = localStorage.getItem(localStorageKey);
+    // if nothing in local storage, default it to an empty JSON object string
+    if (fromLocalStorage == null || fromLocalStorage == '') fromLocalStorage = '{}';
+    // parse data from local storage into JSON
+    const parsedUrlList = JSON.parse(fromLocalStorage);
 
-I. calling the bit.ly API
-  A. Did you learn about using fetch() yet?
-  b. yes, but again i hardly studied it  :P
-  C. no worries, it's simple. fetch() is basically used to call APIs.
-  For now, let's be careful because the bit.ly API is very limited.
-  Let's actually skip the bitly part until the end, okay? sure thing
-II. saving to local storage --  this is done!
-III. retrieving past results from local storage, and displaying on the page
-  So now we need to write some code after the page loads.
-  Did you learn any kind of handler function in HTML for when the page finishes loading? defer?
-  Hmm maybe! If that's the case, we can just write the JS code outside of a function.
-*/
+    // get a list of the entries from local storage
+    const parsedLongUrls = Object.keys(parsedUrlList);
+    // convert the data into HTML text (li elements)
+    const liStrings = parsedLongUrls.map(longUrlKey => {
+        return `<li><div>${longUrlKey}</div><div>${parsedUrlList[longUrlKey]}</div></li>`
+    });
 
-// like here.
-//yeah i put defer in the script link
+    // put the li elements into the ul
+    urlList.innerHTML = liStrings.join();
+}
 
-// alright so here we need to read our JSON data from local storage.
-
-/*
-The plan here is simple.
-1. Read the JSON data from local storage.
-2. For each key-value pair in the JSON data, create a new element in the page that displays the long URL and the shortened URL.
-*/
+// refresh the URL list in the page
+refreshUrlList();
