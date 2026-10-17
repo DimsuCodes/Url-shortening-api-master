@@ -1,0 +1,11 @@
+.env
+.env.*
+config.js
+# logs
+*.log
+node_modules/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/

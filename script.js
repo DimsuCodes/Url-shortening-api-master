@@ -2,7 +2,6 @@ const localStorageKey = "shortenedUrls";
 const longUrl = document.getElementById("long-url");
 const urlList = document.getElementById("urlList");
 
-const apiKey = '<your bitly api key here>';
 
 async function handleSubmit(event) {
     // prevent the page from automatically refreshing
