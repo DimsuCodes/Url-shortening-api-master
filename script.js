@@ -70,4 +70,4 @@ function refreshUrlList() {
 }
 
 // refresh the URL list in the page
-refreshUrlList();
+refreshUrlList(); 
