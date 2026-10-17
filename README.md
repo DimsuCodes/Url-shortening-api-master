@@ -6,7 +6,7 @@ This is a solution to the [Shortly URL shortening API Challenge challenge on Fro
 
 - [Overview](#overview)
   - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
+  - [Preview](#preview)
   - [Links](#links)
 - [My process](#my-process)
   - [Built with](#built-with)
@@ -30,9 +30,23 @@ Users should be able to:
 - Receive an error message when the `form` is submitted if:
   - The `input` field is empty
 
-### Screenshot
+### Preview
 
-![Screenshot of the Shortly URL shortener](./screenshot.png)
+![Preview of the Shortly URL shortener application](./screenshot.png)
+
+**Design reference**
+
+Desktop preview:
+
+![Desktop preview](<./designs/desktop-preview (2).jpg>)
+
+Desktop design:
+
+![Desktop design](<./designs/desktop-design (3).jpg>)
+
+Mobile design:
+
+![Mobile design](<./designs/mobile-design (1).jpg>)
 
 ### Links
 
@@ -98,4 +112,4 @@ if (longUrl.value.trim() === "") {
 
 ## Acknowledgments
 
-Thanks to my instructor and Jeremy Ma for the help and the encouragement to build more hands-on.
+Thanks to my instructor and Jeremy Ma for the help and the encouragement to build more hands-on projects.
