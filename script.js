@@ -10,13 +10,12 @@ async function handleSubmit(event) {
     if (longUrl.value.trim() === "") {
         errorMessage.textContent = "Please enter a link to shorten.";
         return;
-    } if (!longUrl.value.startsWith("http")) {
+    }
+    if (!longUrl.value.startsWith("http")) {
         errorMessage.textContent = "Your link needs to start with http:// or https://";
         return;
-    } if (!response.ok) {
-         errorMessage.textContent = "Bitly couldn't shorten that link. Check it and try again.";
-    return;
     }
+
     // grab what's currently in local storage
     let fromLocalStorage = localStorage.getItem(localStorageKey);
     // if nothing in local storage, default it to an empty JSON object string
@@ -35,6 +34,11 @@ async function handleSubmit(event) {
             "long_url": longUrl.value
         })
     })
+
+    if (!response.ok) {
+        errorMessage.textContent = "Bitly couldn't shorten that link. Check it and try again.";
+        return;
+    }
 
     // get the link from the API response
     const responseData = await response.json();
