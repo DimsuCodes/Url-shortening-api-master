@@ -1,12 +1,22 @@
 const localStorageKey = "shortenedUrls";
 const longUrl = document.getElementById("long-url");
 const urlList = document.getElementById("urlList");
-
+const errorMessage = document.getElementById("errorMessage")
 
 async function handleSubmit(event) {
     // prevent the page from automatically refreshing
     event.preventDefault();
-
+    errorMessage.textContent = "";
+    if (longUrl.value.trim() === "") {
+        errorMessage.textContent = "Please enter a link to shorten.";
+        return;
+    } if (!longUrl.value.startsWith("http")) {
+        errorMessage.textContent = "Your link needs to start with http:// or https://";
+        return;
+    } if (!response.ok) {
+         errorMessage.textContent = "Bitly couldn't shorten that link. Check it and try again.";
+    return;
+    }
     // grab what's currently in local storage
     let fromLocalStorage = localStorage.getItem(localStorageKey);
     // if nothing in local storage, default it to an empty JSON object string
@@ -56,7 +66,7 @@ function refreshUrlList() {
     });
 
     // put the li elements into the ul
-    urlList.innerHTML = liStrings.join();
+    urlList.innerHTML = liStrings.join('');
 }
 
 // refresh the URL list in the page

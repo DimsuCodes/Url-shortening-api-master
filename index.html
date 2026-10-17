@@ -10,17 +10,6 @@
 
   <title>Shortly | URL Shortening</title>
 
-  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-  <style>
-    .attribution {
-      font-size: 0.6875rem;
-      text-align: center;
-    }
-
-    .attribution a {
-      color: hsl(228, 45%, 44%);
-    }
-  </style>
   <!--Linked JavaScript-->
   <script src="./config.js" defer></script>
   <script src="./script.js" defer></script>
@@ -69,6 +58,7 @@
         <input type="text" id="long-url" placeholder="Shorten a link here..." aria-label="Link to shorten" />
         <input type="submit" value="Shorten It!" />
       </form>
+      <p id="errorMessage" role="alert"></p>
     </section>
 
     <!----------------------------------------------------------------------------->
